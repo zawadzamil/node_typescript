@@ -12,6 +12,17 @@ export const create = async (
     res: Response,
     next: NextFunction
 ) => {
-    const student: IStudent = await new Student(req.body);
-    res.send({ message: "Student created", data: student });
+    const { name, id, section, address, blood_group } = req.body;
+    try {
+        const student: IStudent = await Student.create({
+            name,
+            id,
+            section,
+            address,
+            blood_group,
+        });
+        res.send({ message: "Student created", data: student });
+    } catch (err: any) {
+        res.status(400).send({ message: err.message });
+    }
 };

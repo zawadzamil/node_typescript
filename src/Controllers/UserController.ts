@@ -14,6 +14,16 @@ export const getUser = async (
     res.status(200).send({ data: user });
 };
 
+export const getAllUsers = (customQuery: object) => {
+    return async (req: Request, res: Response, next: NextFunction) => {
+        let filter = { ...customQuery };
+
+        const users: object = await User.find(filter);
+
+        res.status(200).send(users);
+    };
+};
+
 export const createUser = async (
     req: Request,
     res: Response,
